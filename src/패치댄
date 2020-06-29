@@ -1,0 +1,31 @@
+App.js 
+ 
+ useEffect(() => {
+    fetch(MOVIE_API_URL)
+    .then((response) => response.json())
+    .then((jsonResponse) => {
+      dispatch({
+        type: 'SEARCH_MOVIES_SUCCESS',
+        payload: jsonResponse.Search
+      })
+    });
+  }, []); //[]를 한번 부른 후 {}안의 내용 실행
+
+  
+
+  fetch(`https://www.omdbapi.com/?s=${searchValue}&apikey=4a3b711b`)
+      .then((response) => response.json())
+      .then((jsonResponse) => {
+        if (jsonResponse.Response === "True") {
+          dispatch({
+            type: 'SEARCH_MOVIES_SUCCESS',
+            payload: jsonResponse.Search
+          })
+        } else {
+          dispatch({
+            type: 'SEARCH_MOVIES_FAILURE',
+            error: jsonResponse.Error
+          })
+        }
+      });
+  
